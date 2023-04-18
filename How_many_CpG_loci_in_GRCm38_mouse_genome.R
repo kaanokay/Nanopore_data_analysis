@@ -1,12 +1,16 @@
 # How to find CpG sites in mouse genome GRCm38?
-# Cozum burada: https://stackoverflow.com/questions/33648447/mapping-cpg-coordinate-using-a-bam-file
+# important link for this pipeline: https://stackoverflow.com/questions/33648447/mapping-cpg-coordinate-using-a-bam-file
+
+# Start
+
+# Loading related packages
 
 library(BSgenome.Mmusculus.UCSC.mm10)
 library(Biostrings)
 
 #Create the chromossome set
 
-# Mouse genom' daki chromosome isimlerini bulma:
+# Find chromosome names in mouse genome
 
 chr_all = paste("chr", c(1:19, "X", "Y", "M"), sep = "")
 
@@ -24,14 +28,13 @@ CpGstartend$V1 <- mgsub::mgsub(CpGstartend$V1, "chr", "")
 write.table(CpGstartend, "/media/ko/New Volume/Documents/Nanopore_data/modbam2bed_outputs/CPGstartend_GRCm38_mouse_genome.txt", sep="\t", col.names=F, row.names=T, quote = F)
 str(CpGstartend)
 
-# Baska bir pipeline: https://support.bioconductor.org/p/95239/
+# Another pipeline: https://support.bioconductor.org/p/95239/
 
 names(Mmusculus)[1:22]
 cgs <- lapply(chr_all, function(x) start(matchPattern("CG", Mmusculus[[x]])))
 cpgr <- do.call(c, lapply(1:22, function(x) GRanges(names(Mmusculus)[x], IRanges(cgs[[x]], width = 2))))
 str(cpgr)
 
-# Bu pipeline da yukarıdaki ile aynı sayıda CpG sonucunu verdi. Her ikisi de CpG sayılarını bulmak icin kullanılabilir.
-# Chr1' den Chr mitochondri' de dahil olmak üzere tüm CpG sayılarını böylelikle bulmus olduk.
+# Both pipelines give the same results in terms of number of CpGs and coordinates of CpGs in mouse genome.
 
-
+# End
