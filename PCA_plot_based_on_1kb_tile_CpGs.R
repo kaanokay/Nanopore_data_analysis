@@ -390,14 +390,17 @@ pData(merged_BSseq)
 
 ## Number of tiles with 0 coverage in all samples
 
-sum(rowSums(getCoverage(merged_BSseq)) == 0) # 50 tane tile' ın coverage' ı sıfır! geriye 2,314,174 tile kalması lazım!
+sum(rowSums(getCoverage(merged_BSseq)) == 0) # 50 tiles have zero coverage in all samples!
+which(rowSums(getCoverage(merged_BSseq)) == 0) # checking which rows have zero coverage in all samples.
+getCoverage(merged_BSseq)[1753879,] # 1753879th row has zero coverage in all samples.
+getCoverage(merged_BSseq)[2156745,] # 2156745th row has zero coverage in all samples.
 
 # Filtering tiles with 0 coverage in all samples
 
 merged_BSseq.cov <- getCoverage(merged_BSseq)
 keep <- which(rowSums(merged_BSseq.cov) !=0)
 merged_BSseq_2 <- merged_BSseq[keep,]
-nrow(merged_BSseq_2) # Beklenildigi gibi 2,314,174 adet tile kaldı geriye ve bunların hepsi bir sekilde coverage' a sahip'ler!
+nrow(merged_BSseq_2)
 
 # --- Coverage filtering for 1kb tile data end ---
 
