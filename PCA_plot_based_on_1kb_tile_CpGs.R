@@ -210,11 +210,11 @@ nrow(merged_BSseq_filtered) # 21,858,950 CpGs left!
 
 # --- Filtering number of CpGs with 0 coverage in all samples end ---
 
-# --- Tilling CpGs start ---
+# --- 1kb Tilling CpGs start ---
 
 merged_BSseq_tiled <- tile_by_windows(bs = merged_BSseq_filtered, win_size = 1000) # 2,722,508 1kb length tiles!
 
-# --- Tilling CpGs end ---
+# --- 1kb Tilling CpGs end ---
 
 # --- Keeping tiles with at least 3 CpGs start ---
 
