@@ -12,6 +12,5 @@
 ml load minimap2/2.24-GCCcore-11.2.0
 ml load SAMtools/1.15-GCC-11.2.0
 
-minimap2 -k17 -ax map-ont --secondary=yes -t 128 -y /hpcdata/Mimir/kao25/Juan_Nanopore_data/UCSC_Mus_musculus.GRCm38_genome/UCSC_Mus_musculus.GRCm38_genome.fa.gz Chd1_low_quality_reads.fq | samtools view -Sb - --threads 128 | samtools sort - --threads 128 > Chd1_low_quality_reads_seconday_alignments.bam
-minimap2 -k17 -ax map-ont --secondary=yes -t 128 -y /hpcdata/Mimir/kao25/Juan_Nanopore_data/UCSC_Mus_musculus.GRCm38_genome/UCSC_Mus_musculus.GRCm38_genome.fa.gz Chd1_high_quality_reads.fq | samtools view -Sb - --threads 128 | samtools sort - --threads 128 > Chd1_high_quality_reads_seconday_alignments.bam
+minimap2 -k17 -ax map-ont --secondary=yes -t 128 -y /hpcdata/Mimir/kao25/Juan_Nanopore_data/UCSC_Mus_musculus.GRCm38_genome/UCSC_Mus_musculus.GRCm38_genome.fa.gz Chd1_merged.fq | samtools view -Sb - --threads 128 | samtools sort - --threads 128 > Chd1_aligned.bam
 exit
