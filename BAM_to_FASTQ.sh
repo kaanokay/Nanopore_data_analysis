@@ -24,3 +24,10 @@ exit
 
 # samtools fastq -TMM,ML --threads 128 Chd1_merged.bam > Chd1_merged.fq
 
+# samtools fastq -T '*' --threads 128 Chd1_merged.bam | gzip > Chd1_merged.fq.gz
+
+# How to pipe conversion of BAM to FASTQ and align to reference genome: https://github.com/nanoporetech/dorado/issues/145
+# If you do: samtools fastq -T '*' you can carry all the tags from the SAM without loss.
+# Note: you need at least samtools 1.16 for this piped command below
+
+# samtools fastq -T '*' --threads 128 Chd1_merged.bam | minimap2 -k17 -ax map-ont --secondary=yes -t 128 -y /hpcdata/Mimir/kao25/Juan_Nanopore_data/UCSC_Mus_musculus.GRCm38_genome/UCSC_Mus_musculus.GRCm38_genome.fa.gz - | samtools view -Sb - --threads 128 | samtools sort - --threads 128 > Chd1_merged_aligned.bam
