@@ -25,6 +25,7 @@ exit
 # samtools fastq -TMM,ML --threads 128 Chd1_merged.bam > Chd1_merged.fq
 
 # samtools fastq -T '*' --threads 128 Chd1_merged.bam | gzip > Chd1_merged.fq.gz
+# samtools fastq -T '*' --threads 128 Chd1_merged.bam > Chd1_merged.fq
 
 # How to pipe conversion of BAM to FASTQ and align to reference genome: https://github.com/nanoporetech/dorado/issues/145
 # If you do: samtools fastq -T '*' you can carry all the tags from the SAM without loss.
