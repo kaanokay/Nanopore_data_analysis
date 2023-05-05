@@ -180,6 +180,10 @@ merged_BSseq_smooted_filtered.tstat <- BSmooth.tstat(merged_BSseq_smooted_filter
                                                      local.correct = TRUE,
                                                      verbose = TRUE)
 
+# Kasper recommended that "k" argument in BSmooth.tstat() function should be set 21. This argument affects variance of DMRs across samples!.
+# k = 21 is standard deviation smooting. When you changed this cutoff to k=21, variance in DMRs across samples should be changed! Check it
+# in DMR plots for example MORC4 gene!
+
 plot(merged_BSseq_smooted_filtered.tstat)
 
 # --- Computing t-statistics end ---
@@ -191,6 +195,13 @@ plot(merged_BSseq_smooted_filtered.tstat)
 
 dmrs0 <- dmrFinder(merged_BSseq_smooted_filtered.tstat, qcutoff = c(0.025, 0.975)) # cutoff for quantiles of the t-statistics.
 dmrs <- subset(dmrs0, n >= 3 & abs(meanDiff) >= 0.1)
+
+# Kasper recommended that qcutoff should be removed because when we set this cutoff we say that always we want to have five percent of
+# genome should have DMRs, equally, that equal number of hypermethylation and hypomethylation! So this give us always DMRs. Because 0.025
+# is left tail of DMRs histogram but 0.975 is right tail of histogram of DMRs. So this always guarantee us to have DMRs even if they are
+# not true positives! So, we should not use this cutoff, instead we should use cutoff = c(-4.6, 4.6) in dmrFinder() function to find DMRs.
+# This absolute cutoff guarantee us imbalance number between hypermethylated and hypomethylated DMRs! So we'll have different number of
+# hypermethylation and hypomethylation.
 
 # Here, we filter out DMRs that do not have at least 3 CpGs in them
 # and at least a mean difference (across the DMR) in methylation between control and Kmt2a of at least 0.1.
