@@ -178,7 +178,7 @@ merged_BSseq_smooted_filtered.tstat <- BSmooth.tstat(merged_BSseq_smooted_filter
                                                      group2 = c("Ctr6_1", "Ctr6_2", "Ctr2", "Ctr3"),
                                                      estimate.var = "group2",
                                                      local.correct = TRUE,
-                                                     verbose = TRUE)
+                                                     verbose = TRUE, k = 21)
 
 # Kasper recommended that "k" argument in BSmooth.tstat() function should be set 21. This argument affects variance of DMRs across samples!.
 # k = 21 is standard deviation smooting. When you changed this cutoff to k=21, variance in DMRs across samples should be changed! Check it
@@ -193,7 +193,7 @@ plot(merged_BSseq_smooted_filtered.tstat)
 
 # --- Finding DMRs start ---
 
-dmrs0 <- dmrFinder(merged_BSseq_smooted_filtered.tstat, qcutoff = c(0.025, 0.975)) # cutoff for quantiles of the t-statistics.
+dmrs0 <- dmrFinder(merged_BSseq_smooted_filtered.tstat, cutoff = c(-4.6, 4.6)) # cutoff for quantiles of the t-statistics.
 dmrs <- subset(dmrs0, n >= 3 & abs(meanDiff) >= 0.1)
 
 # Kasper recommended that qcutoff should be removed because when we set this cutoff we say that always we want to have five percent of
