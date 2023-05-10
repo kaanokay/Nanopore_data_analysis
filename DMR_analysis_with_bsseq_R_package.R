@@ -412,4 +412,9 @@ plotRegion(merged_BSseq_smooted_filtered, a_region, extend = 5000, addRegions = 
 # Explanation of command above: first nine sample colored with #7570b3 HEX code, following sample that is sample of interest color differently with #d95f02 HEX code, and then the rest of samples
 # color with the same color that first nine sample have which is #7570b3 HEX code. So, we differently colored 10th sample and kept the rest of samples in the same color.
 
+# When you want to differently color second sample in BSseq object:
+
+plotRegion(merged_BSseq_smooted_filtered, a_region, extend = 5000, addRegions = a_region, col = c("#7570b3","#d95f02", rep("#7570b3",16)))
+
+# We have 18 samples and differently colored one is second one which is colored with #d95f02 HEX code.
 # --- When you wanna differently color a sample in plot how to do that end ---
