@@ -398,3 +398,18 @@ plotRegion(BSseq = merged_BSseq_smooted_filtered, region = SCML2_region_merged_2
 # Now, three different DMRs in the same gene are displayed in the same plot instead of displaying in the different plots.
 
 # --------------------- Kmt2a end ---------------------
+
+# --- When you wanna differently color a sample in plot how to do that? start ---
+
+# Find order of samples in colum of BSseq object:
+
+colnames(merged_BSseq_smooted_filtered)
+
+# Keep this order in your mind and then change color of sample of interest and keep the same color for the rest of samples:
+
+plotRegion(merged_BSseq_smooted_filtered, a_region, extend = 5000, addRegions = a_region, col = c(rep("#7570b3",9),"#d95f02", rep("#7570b3",8)))
+
+# Explanation of command above: first nine sample colored with #7570b3 HEX code, following sample that is sample of interest color differently with #d95f02 HEX code, and then the rest of samples
+# color with the same color that first nine sample have which is #7570b3 HEX code. So, we differently colored 10th sample and kept the rest of samples in the same color.
+
+# --- When you wanna differently color a sample in plot how to do that end ---
