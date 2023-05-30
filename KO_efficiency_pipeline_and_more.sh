@@ -29,9 +29,6 @@ sum of number of reads with large and small indels divide by total number of rea
 
 # --- End
 
-
-
-
 # Extra notes about CIGAR string and samtools mpileup
 
 # --- Start
@@ -108,44 +105,3 @@ samtools view -@ 128 -h input.bam | awk -v READ_ID="9af91409-808d-4f77-bafc-ca6c
 samtools view 9af91409-808d-4f77-bafc-ca6c23d0ee05.bam | less | cut -f1 | head
 
 # --- End
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
