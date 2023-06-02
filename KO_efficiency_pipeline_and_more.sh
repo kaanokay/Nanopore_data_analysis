@@ -4,13 +4,15 @@
 # 1. https://bioconductor.org/packages/devel/bioc/vignettes/CrispRVariants/inst/doc/user_guide.pdf
 # 2. https://cmdcolin.github.io/posts/2022-02-06-sv-sam
 
+# Kasper's suggestion is that including supplementary alignments in coverage calculation, that is, do not get rid of them in coverage calculation and counting CRISPR-editing reads!
+
 # To calculate knockout efficiency in ONT data
 
 # --- Start
 
 # 1. Go to target site which is 5bp up and downstream of gRNA coordinates and exclude supplementary reads which do not belong to target site of interest
 
-samtools mpileup --region chr9:44881220-44881249 --excl-flags 0x800 Ctr6_3_exon1.bam | cut -f 5 | tr '[a-z]' '[A-Z]' | fold -w 1 | sort | uniq -c > Ctr6_3_target_site_mpileup.txt
+# samtools mpileup --region chr9:44881220-44881249 --excl-flags 0x800 Ctr6_3_exon1.bam | cut -f 5 | tr '[a-z]' '[A-Z]' | fold -w 1 | sort | uniq -c > Ctr6_3_target_site_mpileup.txt
 
 # --region chr9:44881220-44881249 is 5bp up and downstream of gRNA location for Kmt2a exon1
 # --excl-flags excludes reads with 0x800 flags which means supplementary reads
@@ -18,7 +20,7 @@ samtools mpileup --region chr9:44881220-44881249 --excl-flags 0x800 Ctr6_3_exon1
 
 # 2. Calculation of coverage in target site of interest. In this step, supplementary reads should be exluceded because those reads coming from second target site which is targeted by second gRNA!
 
-samtools coverage --region chr9:44881220-44881249 --ff 0x800 Ctr6_3_exon1.bam
+# samtools coverage --region chr9:44881220-44881249 --ff 0x800 Ctr6_3_exon1.bam
 
 # 3. Knockout efficiency calculation
 
