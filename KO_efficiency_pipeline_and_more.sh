@@ -106,4 +106,33 @@ samtools view -@ 128 -h input.bam | awk -v READ_ID="9af91409-808d-4f77-bafc-ca6c
 
 samtools view 9af91409-808d-4f77-bafc-ca6c23d0ee05.bam | less | cut -f1 | head
 
+# To count total number of reads with indels greater than 2 bases in target site of CRISPR, we need to use samtools mpileup output as input in script below: --- start
+
+#!/bin/bash
+
+filename="Kmt2a_1_aligned_mapping_quality_30_filtered_400bp_read_length_filtered_mpileup_output_2.txt"
+count=0
+
+while IFS=$'\t' read -r -a columns; do
+    fifth_column="${columns[4]}"
+    cleaned_column=$(sed 's/[^0-9+2GA]//g' <<< "$fifth_column")
+
+    for ((i=0; i<${#cleaned_column}; i++)); do
+        char="${cleaned_column:i:1}"
+        if [[ "$char" =~ [3-9] ]]; then
+            count=$((count + 1))
+        fi
+    done
+done < "$filename"
+
+echo "Total number of reads with indels greater than 2 bases: $count"
+
+# With this script we can count number of reads with indels greater than 2 bases using samtools mpileup output.
+# if you wanna count number of reads with indels greater than 4 bases "if [[ "$char" =~ [5-9] ]]; then" part in script should be written.
+# if you wanna count number of reads with indels greater than 2 bases "if [[ "$char" =~ [3-9] ]]; then" part in script should be written.
+# This script takes samtools mpileup output as input to count number of reads with small indels!
+# rationale: go 5th column of mpileup output and count integer values which stand for deletion and insertion in reads.
+
+To count reads with indels greater than 2 bases in target site of CRISPR, we need to use samtools mpileup output as input in script below: --- end
+
 # --- End
