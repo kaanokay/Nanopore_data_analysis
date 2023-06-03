@@ -28,7 +28,7 @@ echo "Total number of reads with indels greater than 2 bases: $count"
 # This script takes samtools mpileup output as input to count number of reads with small indels!
 # rationale: go 5th column of mpileup output and count integer values which stand for deletion and insertion in reads.
 
-To count reads with indels greater than 2 bases in target site of CRISPR, we need to use samtools mpileup output as input in script below: --- end
+To count reads with indels greater than 2 bases in target site of CRISPR, we need to use samtools mpileup output as input in script below --- end
 
 # Some important sources for knockout efficiency calculation:
 # 1. https://bioconductor.org/packages/devel/bioc/vignettes/CrispRVariants/inst/doc/user_guide.pdf
