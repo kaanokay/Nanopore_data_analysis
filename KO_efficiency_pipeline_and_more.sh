@@ -36,6 +36,8 @@ To count reads with indels greater than 2 bases in target site of CRISPR, we nee
 
 # Kasper's suggestion is that including supplementary alignments in coverage calculation, that is, do not get rid of them in coverage calculation and counting CRISPR-editing reads!
 # reads with small indels larger than 4 or 5 bases should be counted to find CRISPR-editing reads because reads with small indels less than 4 or 5 bases might be sequencing errors!
+# Keeping in mind that small indels less than 4 or 5 bases might be existed also because of CRISPR-editing so this pipeline does not yield 100% accurancy in KO efficiency calculation!
+# Reads in target site either have small indels or large indels, that is, when a read has small indel it has no large indel, versa vica!
 
 # To calculate knockout efficiency in ONT data
 
