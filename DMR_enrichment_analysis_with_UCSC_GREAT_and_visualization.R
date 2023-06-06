@@ -28,12 +28,16 @@ GO_Biological_Process <- subset(Kmt2a_392_DMR_enrichment_results, Kmt2a_392_DMR_
 
 # Put cutoff for adjusted pvalue and enrichment fold change
 
-GO_Biological_Process <- subset(GO_Biological_Process, GO_Biological_Process$BinomFdrQ < 0.05 & GO_Biological_Process$RegionFoldEnrich > 2)
+GO_Biological_Process <- subset(GO_Biological_Process, GO_Biological_Process$BinomFdrQ < 0.05 & GO_Biological_Process$RegionFoldEnrich > 2 
+                                & GO_Biological_Process$HyperFdrQ < 0.05 & GO_Biological_Process$GeneFoldEnrich > 2)
+
 # subset of enrichments according to adjusted pvalues and fold enrichment coefficient
 
-# Why we used BinomFdrQ and Fold change cutoffs: look into following paper "https://www.nature.com/articles/nature14248)"
-# We restricted ourselves to interpretation of results with an enrichment ratio of at least 2,
-# and multiple hypothesis testing corrected P values <0.01 (example for GREAT cutoff
+# Why we used both binomial and hypergeometic test based cutoffs: look into following paper "https://www.nature.com/articles/nature14248)"
+# We restricted ourselves to interpretation of results with an enrichment ratio of at least 2, 
+# and multiple hypothesis testing corrected P values <0.05 for both the binomial and the hypergeometric distribution based tests.
+# Cutoff should include both binomial and hypergeometic test adjusted pvalues and their fold changes.
+# In visualization, either binomial or hypergeometic enrichment can be used but cutoff should include both!
 
 # Assignment of fold enrichment as numeric to get top 20 the most enriched terms
 
