@@ -7,12 +7,12 @@
 # 3. Downloading "configureHomer.pl" perl script from link below
 # "http://homer.ucsd.edu/homer/introduction/install.html"
 # 4. Place this perl script to homer directory and then call it like:
-#"/usr/bin/perl configureHomer.pl -install"
+/usr/bin/perl configureHomer.pl -install
 # Note/ without creating bin directory, we're not able to install HOMER!
 # 5. To call any script of HOMER in bin directory, we can add path to bin directory like:
-# export PATH=/path/to/homer/bin:$PATH
+export PATH=/path/to/homer/bin:$PATH
 # 6. Lets call "findMotifsGenome.pl" script like:
-# "findMotifsGenome.pl allKOs_vs_all_controls_DMRs.txt /home/ko/homer/data/genomes/mm10 24_DMRs_results_cpg_normalization -size 200 -len 8 -fdr -seqlogo -cpg"
+findMotifsGenome.pl allKOs_vs_all_controls_DMRs.txt /home/ko/homer/data/genomes/mm10 24_DMRs_results_cpg_normalization -size 200 -len 8 -fdr -seqlogo -cpg
 # allKOs_vs_all_controls_DMRs.txt is bed format file containing coordinates of differentially methylated regions
 # /home/ko/homer/data/genomes/mm10 is a path to mm10 UCSC mouse genome.
 # To create this mouse genome we can run: "configureHomer.pl -list" to see genomes can be called and then install mm10 UCSC mouse genome "configureHomer.pl -install mm10"
@@ -39,7 +39,7 @@ allKOs_vs_all_controls_DMRs.txt \ # (differentially methylated regions)
 > Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt # (output)
 
 # After getting Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt output, go UCSC genome browser and select conservation track
-# to see DNA sequence of enriched motifs.
+# to see the DNA sequence of enriched motifs.
 
 # http://homer.ucsd.edu/homer/ngs/peakMotifs.html (the link to find location of enriched motifs).
 
