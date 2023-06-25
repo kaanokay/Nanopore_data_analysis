@@ -29,4 +29,18 @@
 
 # To learn rationale behind HOMER read following paper: "https://www.sciencedirect.com/science/article/pii/S1097276510003667?via%3Dihub"
 
+# After detection of enriched motifs, how to find which input region (in this case differentially methylated regions) has identified enriched DNA motifs?
+# How to find coordinates of enriched DNA motifs (transcription factor binding sites)?
+
+$ annotatePeaks.pl \
+allKOs_vs_all_controls_DMRs.txt \ # (differentially methylated regions)
+/home/ko/homer/data/genomes/mm10 \ # (path to mm10 mouse genome)
+-m /home/ko/homer/24_DMRs_results_cpg_normalization/homerMotifs.all.motifs \ # (all identified motifs from homer output)
+> Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt # (output)
+
+# After getting Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt output, go UCSC genome browser and select conservation track
+# to see DNA sequence of enriched motifs.
+
+# http://homer.ucsd.edu/homer/ngs/peakMotifs.html (the link to find location of enriched motifs).
+
 # End -------
