@@ -1,4 +1,4 @@
-# How to install HoMER and use it for motif enrichment analysis of differentially methylated regions?
+# How to install HOMER and use it for motif enrichment analysis of differentially methylated regions?
 
 # Start -------
 
