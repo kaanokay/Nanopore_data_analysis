@@ -43,4 +43,8 @@ allKOs_vs_all_controls_DMRs.txt \ # (differentially methylated regions)
 
 # http://homer.ucsd.edu/homer/ngs/peakMotifs.html (the link to find location of enriched motifs).
 
+# How to find methylated motifs, that is, transcription factor binding sites which are methylated and this is related to binding affinity!
+# Check following links: "https://hemtools.readthedocs.io/en/latest/content/Motif_analysis/methylmotifs.html" & https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6748772/
+# & http://wanglab.ucsd.edu/star/mEpigram/
+
 # End -------
