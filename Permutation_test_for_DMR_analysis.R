@@ -228,4 +228,7 @@ saveRDS(
   object = fstat_pipeline$dmrs[fstat_pipeline$dmrs$fwer < 50, ],
   file = here("DMRs", "objects", "general_CG-DMRs.Phase1.rds"))
 
+# What is difference between t-stat test and f-stat test in bsseq pipeline:
+Kasper said that "One difference is the estimate.var="group2" That option doesn't really exist for the F-stat approach".
+
 # End ------------
