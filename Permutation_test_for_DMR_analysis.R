@@ -219,6 +219,8 @@ fstat_pipeline <- fstat.pipeline(
 
 # Error in fstat.pipeline(BSseq = BSseq.obj, design = design, contrasts = contrasts,  : 
   # No DMRs identified. Consider reducing the 'cutoff' from (21.16)
+# Kasper said that: "This error tells us that there are no putative DMRs identified. Yet, you find putative DMRs when you run the tstat function by yourself, so something is wrong. 
+# This is a different result from saying that none of the 24 putative DMRs pass multiple testing correction"
 
 # Save results as rds file ------------
 
