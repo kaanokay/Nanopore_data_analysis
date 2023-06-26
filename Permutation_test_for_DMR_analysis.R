@@ -217,6 +217,9 @@ fstat_pipeline <- fstat.pipeline(
   #chunksize = chunkdim(assay(BSseq.obj, "coef"))[1],
   mc.cores = as.integer(Sys.getenv("NSLOTS")))
 
+# Error in fstat.pipeline(BSseq = BSseq.obj, design = design, contrasts = contrasts,  : 
+  # No DMRs identified. Consider reducing the 'cutoff' from (21.16)
+
 # Save results as rds file ------------
 
 saveRDS(
