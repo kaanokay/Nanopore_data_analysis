@@ -139,4 +139,67 @@ samtools view -@ 128 -h input.bam | awk -v READ_ID="9af91409-808d-4f77-bafc-ca6c
 
 samtools view 9af91409-808d-4f77-bafc-ca6c23d0ee05.bam | less | cut -f1 | head
 
+# Visualization of KO efficiency in R computing environment start -----------
+
+# Generate vectors containing % percent of KO efficiency, that is, reads with indels because of CRISPR divided by total number of reads in target region.
+
+Kmt2a_2_gRNA2 <- 0.285714286
+Kmt2a_2_gRNA1 <- 0.611111111
+Kmt2a_1_gRNA2 <- 0.361111111
+Kmt2a_1_gRNA1 <- 0.307692308
+Kdm6a_gRNA2 <- 0.44
+Kdm6a_gRNA1 <- 0.56
+Kdm5c_gRNA2 <- 0.136363636
+Kdm5c_gRNA1 <- 0.178571429
+Kdm5b_gRNA2 <- 0.307692308
+Kdm5b_gRNA1 <- 0.538461538
+Kdm2b_gRNA2 <- 0.32
+Kdm2b_gRNA1 <- 0.375
+Kdm1a_gRNA2 <- 0.2
+Kdm1a_gRNA1 <- 0.266666667
+Hdac8_gRNA2 <- 0.238095238
+Hdac8_gRNA1 <- 0.363636364
+Hdac6_gRNA2 <- 0.52173913
+Hdac6_gRNA1 <- 0.590909091
+Ezh2_gRNA2 <- 0
+Ezh2_gRNA1 <- 0.133333333
+Dnmt1_gRNA2 <- 0.5
+Dnmt1_gRNA1 <- 0.375
+Crebbp_gRNA2 <- 0.44
+Crebbp_gRNA1 <- 0.571428571
+Chd1_gRNA2 <- 0.551724138
+Chd1_gRNA1 <- 0.28125
+ 
+ 
+# Step 1: Combine vector names into a character vector
+vector_names <- c("Kmt2a_2_gRNA2", "Kmt2a_2_gRNA1", "Kmt2a_1_gRNA2", "Kmt2a_1_gRNA1", "Kdm6a_gRNA2", "Kdm6a_gRNA1", "Kdm5c_gRNA2",
+                   "Kdm5c_gRNA1", "Kdm5b_gRNA2", "Kdm5b_gRNA1", "Kdm2b_gRNA2", "Kdm2b_gRNA1", "Kdm1a_gRNA2", "Kdm1a_gRNA1", "Hdac8_gRNA2",
+                   "Hdac8_gRNA1", "Hdac6_gRNA2", "Hdac6_gRNA1", "Ezh2_gRNA2", "Ezh2_gRNA1", "Dnmt1_gRNA2", "Dnmt1_gRNA1", "Crebbp_gRNA2",
+                   "Crebbp_gRNA1", "Chd1_gRNA2", "Chd1_gRNA1")
+ 
+# Step 2: Create numeric values for each vector
+> vector_values <- c(Kmt2a_2_gRNA2, Kmt2a_2_gRNA1, Kmt2a_1_gRNA2, Kmt2a_1_gRNA1, Kdm6a_gRNA2, Kdm6a_gRNA1, Kdm5c_gRNA2,
+                    Kdm5c_gRNA1, Kdm5b_gRNA2, Kdm5b_gRNA1, Kdm2b_gRNA2, Kdm2b_gRNA1, Kdm1a_gRNA2, Kdm1a_gRNA1, Hdac8_gRNA2,
+                    Hdac8_gRNA1, Hdac6_gRNA2, Hdac6_gRNA1, Ezh2_gRNA2, Ezh2_gRNA1, Dnmt1_gRNA2, Dnmt1_gRNA1, Crebbp_gRNA2,
+                    Crebbp_gRNA1, Chd1_gRNA2, Chd1_gRNA1)
+ 
+# Step 3: Generate the bar plot
+barplot(vector_values, names.arg = vector_names, xlab = "EM genes", ylab = "% percent of KO efficiency", main = "KO efficiency of EM genes", las = 2)
+
+# calculate the 95% binomial confidence interval for each KO efficiency
+
+#define proportion of reads (reads with indels/total number of reads)
+
+p <- 9/32
+
+#define significance level
+a <- .05
+
+#calculate 95% confidence interval
+p + c(-qnorm(1-a/2), qnorm(1-a/2))*sqrt((1/100)*p*(1-p))
+
+# Add this binomial confidence intervals to bar plot of KO efficiency.
+
+# Visualization of KO efficiency in R computing environment end -----------
+
 # --- End
