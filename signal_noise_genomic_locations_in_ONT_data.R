@@ -113,4 +113,51 @@ hist(Dnmt1_chr9_non_signal_noise$log2OR)
 # check their pvalue and log2 values by generating to see there are true positive DMRs between knockouts
 # and control samples End ------
 
+# Removal of signal noise regions from bed files:
+# ----------------------------
+target_chromosome <- "chr2"
+target_start <- 98662555
+target_end <- 98667332
+# ----------------------------
+target_chromosome_1 <- "chr2"
+target_start_1 <- 181917000
+target_end_1 <- 181932100
+# ----------------------------
+target_chromosome_2 <- "chr9"
+target_start_2 <- 3000003
+target_end_2 <- 3038419
+# ----------------------------
+target_chromosome_3 <- "chr11"
+target_start_3 <- 3123000
+target_end_3 <- 3201000
+# ----------------------------
+target_chromosome_4 <- "chr17"
+target_start_4 <- 39843000
+target_end_4 <- 39849000
+# ----------------------------
+target_chromosome_5 <- "chr18"
+target_start_5 <- 3004000
+target_end_5 <- 3007000
+# ----------------------------
+
+Kmt2a_2_bed_file <- Kmt2a_2_bed_file[!(Kmt2a_2_bed_file$chrom == target_chromosome &
+                                         Kmt2a_2_bed_file$start >= target_start &
+                                         Kmt2a_2_bed_file$end <= target_end |
+                                         Kmt2a_2_bed_file$chrom == target_chromosome_1 &
+                                         Kmt2a_2_bed_file$start >= target_start_1 &
+                                         Kmt2a_2_bed_file$end <= target_end_1 |
+                                         Kmt2a_2_bed_file$chrom == target_chromosome_2 &
+                                         Kmt2a_2_bed_file$start >= target_start_2 &
+                                         Kmt2a_2_bed_file$end <= target_end_2 |
+                                         Kmt2a_2_bed_file$chrom == target_chromosome_3 &
+                                         Kmt2a_2_bed_file$start >= target_start_3 &
+                                         Kmt2a_2_bed_file$end <= target_end_3 |
+                                         Kmt2a_2_bed_file$chrom == target_chromosome_4 &
+                                         Kmt2a_2_bed_file$start >= target_start_4 &
+                                         Kmt2a_2_bed_file$end <= target_end_4 |
+                                         Kmt2a_2_bed_file$chrom == target_chromosome_5 &
+                                         Kmt2a_2_bed_file$start >= target_start_5 &
+                                         Kmt2a_2_bed_file$end <= target_end_5), ]
+
+
 # Signal noise detection end ---
