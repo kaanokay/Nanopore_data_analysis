@@ -233,6 +233,10 @@ saveRDS(
 
 # "Downloads" and "save" are directories where results are saved.
 
+# Or save like this to get final DMRs:
+
+write.csv(subset(fstat_pipeline$dmrs, n >= 3 & abs(maxDiff) >= 0.1), "/home/ko/Downloads/Hans_thought_about_the_most_dramatic_samples_in_terms_of_methylation_difference_from_control_samples/Kaan/permutation_test_DMRs.csv", quote = F, row.names = F)
+                  
 # What is difference between t-stat test and f-stat test in bsseq pipeline:
 # Kasper said that "One difference is the estimate.var="group2" That option doesn't really exist for the F-stat approach".
 
