@@ -23,13 +23,13 @@ pData(BSseq.obj)$metadata_2[,1] # This returns annotation of samples, that is, C
 BSseq.obj$group <- pData(BSseq.obj)$metadata_2[,1] # create "group" column in BSseq object describing samples
 # as control and knockouts
 
-# Create design matrix to assing control samples "1", where knockout samples 0.
+# Create a design matrix to assing control samples "1", where knockout samples 0.
 # Design matrix is kind of descriptive data for linear model.
 
 design <- model.matrix(~ group, colData(BSseq.obj))
 colnames(design) <- gsub("group", "", colnames(design))
 
-# Create Constrasts matrix
+# Create a contrast matrix
 
 contrasts <- diag(rep(1, ncol(design)))
 rownames(contrasts) <- colnames(design)
