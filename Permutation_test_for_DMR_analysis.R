@@ -229,7 +229,7 @@ fstat_pipeline <- fstat.pipeline(
 
 saveRDS(
   object = fstat_pipeline$dmrs[fstat_pipeline$dmrs$fwer < 50, ],
-  file = here("Downloads", "save", "allKO_vs_allcontrols_DMR_results.rds"))
+  file = here("Downloads", "save", "allKO_vs_allcontrols_DMR_results.rds")) # What is cutoff for fwer and why?
 
 # "Downloads" and "save" are directories where results are saved.
 
@@ -239,6 +239,9 @@ write.csv(subset(fstat_pipeline$dmrs, n >= 3 & abs(maxDiff) >= 0.1), "/home/ko/D
                   
 # What is difference between t-stat test and f-stat test in bsseq pipeline:
 # Kasper said that "One difference is the estimate.var="group2" That option doesn't really exist for the F-stat approach".
+
+# Note/ maxDiff column in fstat and meanDiff column in tstat test matrix give the same methylation difference between control and knockout groups!
+# cutoff in fstat and tstat tests should be the same to get the same differentially methylated regions!
 
 # Ask something about permutation test to ChatGPT:
 
