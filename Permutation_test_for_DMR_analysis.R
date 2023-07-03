@@ -8,6 +8,8 @@ library(bsseq)
 library(data.table)
 library(limma)
 library(parallel)
+library(permute)
+library(here)
 
 # Uploading BSseq object for all KO vs all control design
 
@@ -18,12 +20,18 @@ BSseq.obj <- readRDS("/media/ko/New Volume/Documents/Nanopore_data/modbam2bed_ou
 pData(BSseq.obj)$metadata_2[,1] # This returns annotation of samples, that is, Control and KOs!
 # metada_2 annotation is a data frame but we need to have character strings instead of data frame
 
-BSseq.obj$group <- pData(BSseq.obj)$metadata_2[,1] # create "group" column in BSseq object desribing samples
+BSseq.obj$group <- pData(BSseq.obj)$metadata_2[,1] # create "group" column in BSseq object describing samples
 # as control and knockouts
+
+# Create design matrix to assing control samples "1", where knockout samples 0.
+# Design matrix is kind of descriptive data for linear model.
 
 design <- model.matrix(~ group, colData(BSseq.obj))
 colnames(design) <- gsub("group", "", colnames(design))
-contrasts <- diag(rep(1, ncol(design)))[, -1, drop = FALSE]
+
+# Create Constrasts matrix
+
+contrasts <- diag(rep(1, ncol(design)))
 rownames(contrasts) <- colnames(design)
 
 # create fstat.pipeline() function ------------
@@ -209,16 +217,11 @@ fstat_pipeline <- fstat.pipeline(
   fac = BSseq.obj$group,
   nperm = 1000,
   coef = NULL,
-  maxGap.sd = 10 ^ 8,
-  maxGap.dmr = 300,
   type = "dmrs",
-  # NOTE: This chunksize is a good choice if your data are chunked row-wise
-  #       (e.g., 100 Mb blocks).
-  #chunksize = chunkdim(assay(BSseq.obj, "coef"))[1],
-  mc.cores = as.integer(Sys.getenv("NSLOTS")))
+  mc.cores = 64)
 
 # Error in fstat.pipeline(BSseq = BSseq.obj, design = design, contrasts = contrasts,  : 
-  # No DMRs identified. Consider reducing the 'cutoff' from (21.16)
+# No DMRs identified. Consider reducing the 'cutoff' from (21.16)
 # Kasper said that: "This error tells us that there are no putative DMRs identified. Yet, you find putative DMRs when you run the tstat function by yourself, so something is wrong. 
 # This is a different result from saying that none of the 24 putative DMRs pass multiple testing correction"
 
@@ -226,9 +229,32 @@ fstat_pipeline <- fstat.pipeline(
 
 saveRDS(
   object = fstat_pipeline$dmrs[fstat_pipeline$dmrs$fwer < 50, ],
-  file = here("DMRs", "objects", "general_CG-DMRs.Phase1.rds"))
+  file = here("Downloads", "save", "allKO_vs_allcontrols_DMR_results.rds"))
+
+# "Downloads" and "save" are directories where results are saved.
 
 # What is difference between t-stat test and f-stat test in bsseq pipeline:
-Kasper said that "One difference is the estimate.var="group2" That option doesn't really exist for the F-stat approach".
+# Kasper said that "One difference is the estimate.var="group2" That option doesn't really exist for the F-stat approach".
+
+# Ask something about permutation test to ChatGPT:
+
+# Question : what is design matrix and contrasts matrix in statistics, explain me diag function in base R package and model.matrix function in stats R package
+
+# Answer:
+# In statistics, the design matrix and contrasts matrix are two important concepts used in regression analysis and statistical modeling.
+
+# Design Matrix: The design matrix, often denoted as X, is a matrix that represents the predictor variables in a regression model. Each row of the design matrix corresponds to an observation, and each column represents a different predictor variable or factor level. In a simple linear regression model with one predictor variable, the design matrix would have two columns: one for the intercept term (usually a column of ones) and one for the predictor variable. In more complex models, such as multiple linear regression or generalized linear models, the design matrix will have additional columns for each predictor or factor level.
+
+# Contrasts Matrix: The contrasts matrix is a matrix used to specify the coding scheme for categorical predictor variables or factor levels in a regression model. It determines how the levels of a categorical variable are represented numerically in the design matrix. Different coding schemes can be used to represent categorical variables, such as dummy coding, treatment coding, or contrast coding. The contrasts matrix defines the numerical values assigned to each level of the categorical variable.
+
+# Now let's move on to the functions in R:
+
+# The diag() function in the base R package is used to create or extract a diagonal matrix or diagonal elements from a given matrix. It has different applications depending on how it is used. Here are some examples:
+
+# To create a diagonal matrix from a vector, you can pass the vector as an argument to the diag() function. For example, diag(c(1, 2, 3)) will create a diagonal matrix with the elements 1, 2, and 3 on its diagonal and zeros elsewhere.
+# To extract the diagonal elements from a matrix, you can pass the matrix as an argument to the diag() function without specifying any additional parameters. For example, diag(matrix(1:9, nrow = 3)) will return a vector with the diagonal elements 1, 5, and 9.
+# The model.matrix() function is part of the stats package in R and is used to create a design matrix from a model formula and a data frame. It takes a formula object and a data frame as arguments and returns a design matrix based on the formula. The design matrix includes the predictor variables specified in the formula, as well as any transformations or interactions specified in the formula.
+
+# The model.matrix() function is particularly useful for creating a design matrix for regression models that involve categorical variables. It automatically handles the encoding of categorical variables into appropriate dummy variables or contrasts based on the coding scheme specified in the formula. The resulting design matrix can then be used as input to various regression models in R.
 
 # End ------------
