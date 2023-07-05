@@ -36,7 +36,7 @@ $ annotatePeaks.pl \
 allKOs_vs_all_controls_DMRs.txt \ # (differentially methylated regions)
 /home/ko/homer/data/genomes/mm10 \ # (path to mm10 mouse genome)
 -m /home/ko/homer/24_DMRs_results_cpg_normalization/homerMotifs.all.motifs \ # (all identified motifs from homer output)
-> Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt # (output) -cpu 8
+> Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt -cpu 8 # (output)
 
 # After getting Finding_instance_of_specific_motifs_24_DMRs_results_cpg_normalization_2.txt output, go UCSC genome browser and select conservation track
 # to see the DNA sequence of enriched motifs.
