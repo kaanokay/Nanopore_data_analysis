@@ -460,3 +460,101 @@ EnrichedHeatmap(matrix_Ctr6_1, col = methylation_color,
                       ))))
 
 # How to draw methlation pattern of multiple samples for a target region? ---- end
+
+# Draw methylation values over vicinity of TSS for neuron-specific genes ----- start
+
+# Neuron-specific genes were downloaded from: "https://doi.org/10.1016/j.celrep.2017.08.086"
+
+Neuron_specific_genes <- read_excel(path = "/home/ko/Downloads/1-s2.0-S2211124717312287-mmc2.xls", sheet = 1, skip = 1)
+
+# mm10 mouse genome RefSeq genes with gene symbols
+
+Refseq_genes_with_gene_symbols <- fread("/home/ko/Downloads/Hans_thought_about_the_most_dramatic_samples_in_terms_of_methylation_difference_from_control_samples/RefSeq_mouse_gene_IDs.csv")
+
+# To get mm10 coordinates of neuron-specific genes from RefSeq
+
+Neuron_specific_genes_with_coordinates <- subset(Refseq_genes_with_gene_symbols, Refseq_genes_with_gene_symbols$GeneSymbols %in% Neuron_specific_genes$`Official Symbol`)
+
+# Generate GRanges object for neuron-specific genes
+
+Neuron_specific_genes_GRanges <- GRanges(seqnames = Neuron_specific_genes_with_coordinates$chromosome, ranges = IRanges(start = Neuron_specific_genes_with_coordinates$start,
+                                                                                                                        end = Neuron_specific_genes_with_coordinates$end), Genes = Neuron_specific_genes_with_coordinates$GeneSymbols)
+# Extract TSS of neuron-specific genes
+
+Neuron_specific_genes_GRanges_tss = promoters(Neuron_specific_genes_GRanges, upstream = 0, downstream = 1)
+
+# How Dnmt1 knockout methylation values over TSS of neuron specific genes compare to control samples
+
+matrix_Dnmt1 = normalizeToMatrix(Dnmt1_GRanges, Neuron_specific_genes_GRanges_tss, value_column = "methylation", 
+                                   extend = 5000, mean_mode = "absolute", w = 50, background = NA)
+
+matrix_Ctr1 = normalizeToMatrix(Ctr1_GRanges, Neuron_specific_genes_GRanges_tss, value_column = "methylation", 
+                                 extend = 5000, mean_mode = "absolute", w = 50, background = NA)
+
+matrix_Ctr2 = normalizeToMatrix(Ctr2_GRanges, Neuron_specific_genes_GRanges_tss, value_column = "methylation", 
+                                extend = 5000, mean_mode = "absolute", w = 50, background = NA)
+
+matrix_Ctr3 = normalizeToMatrix(Ctr3_GRanges, Neuron_specific_genes_GRanges_tss, value_column = "methylation", 
+                                extend = 5000, mean_mode = "absolute", w = 50, background = NA)
+
+# Visualization of global methylation in Dnmt1 and control samples over transcription start sites of
+# neuron-specific genes
+
+# Specify the file path and name for the PDF file
+
+pdf_file <- "/media/ko/New Volume/Documents/Nanopore_data/modbam2bed_outputs/UCSC_mouse_genome_based_analysis/mapping_quality_30_and_400bp_length_filtering_results/Enriched_heatmap_visualization/neuron_specific_genes_TSS_methylation_values.pdf"
+
+# Open the PDF device
+pdf(pdf_file)
+
+ht_list <- EnrichedHeatmap(matrix_Dnmt1, col = methylation_color,
+                name = "methylation", column_title = "Dnmt1",
+                top_annotation = HeatmapAnnotation(
+                  enriched = anno_enriched(
+                    ylim = c(0, 1),
+                    axis_param = list(
+                      at = c(0, 0.5, 1),
+                      labels = c("0", "0.5", "1"),
+                      side = "right",
+                      facing = "outside"
+                    )))) + 
+  EnrichedHeatmap(matrix_Ctr1, col = methylation_color,
+                  name = "methylation", column_title = "Ctr1",
+                  top_annotation = HeatmapAnnotation(
+                    enriched = anno_enriched(
+                      ylim = c(0, 1),
+                      axis_param = list(
+                        at = c(0, 0.5, 1),
+                        labels = c("0", "0.5", "1"),
+                        side = "right",
+                        facing = "outside"
+                      )))) + 
+  EnrichedHeatmap(matrix_Ctr2, col = methylation_color,
+                  name = "methylation", column_title = "Ctr2",
+                  top_annotation = HeatmapAnnotation(
+                    enriched = anno_enriched(
+                      ylim = c(0, 1),
+                      axis_param = list(
+                        at = c(0, 0.5, 1),
+                        labels = c("0", "0.5", "1"),
+                        side = "right",
+                        facing = "outside"
+                      )))) + 
+  EnrichedHeatmap(matrix_Ctr3, col = methylation_color,
+                  name = "methylation", column_title = "Ctr3",
+                  top_annotation = HeatmapAnnotation(
+                    enriched = anno_enriched(
+                      ylim = c(0, 1),
+                      axis_param = list(
+                        at = c(0, 0.5, 1),
+                        labels = c("0", "0.5", "1"),
+                        side = "right",
+                        facing = "outside"
+                      ))))
+
+draw(ht_list, ht_gap = unit(c(8, 8, 8), "mm")) # draw() function put space between heatmaps
+
+# Close the PDF device
+dev.off()
+
+# Draw methylation values over vicinity of TSS for neuron-specific genes ----- end
