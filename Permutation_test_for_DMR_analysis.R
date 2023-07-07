@@ -538,3 +538,18 @@ saveRDS(object = fstat_pipeline$dmrs, file = "/hpcdata/Mimir/shared/Juan_ONT_dat
 write.csv(subset(fstat_pipeline$dmrs, n >= 3 & abs(maxDiff) >= 0.1), "/hpcdata/Mimir/shared/Juan_ONT_data/processed_data/results/allKOs_vs_all_controls/Permutation_test_to_get_pvalues_for_DMRs/allKO_vs_allcontrols_permutation_test_DMR_results.csv", quote = F, row.names = F)
 
 # End ------------
+
+# Notes from Kasper:
+
+# fstat has no local.correct and estimate.var arguments so its not same with tstat for DMR analysis. When you do DMR analysis with fstat, it would give different DMRs than tsats gives.
+# Put k argument and local.correct argument to getNullDistribution_BSmooth.tstat() function for permutation test.
+# Go permuteAll() function to see how we can reshuffle or resampling samples (knockout and control samples) for permutation.
+# WGBS analysis, this permutation pipeline is okay with equal number of samples, but we have different number of samples (13 knockout and 5 controls) so we can't generate design or idx matrix for permutation.
+# We need to create new function for permutation addressing asymmetric permutation where number of samples is different.
+# We function (tstat and fstat) should be merged somehow for permutation.
+# Each row in idxmatrix is permutation of samples.
+# getFWER function for calculation of pvalues. That's why Kasper decided to put <50 cutoff for it because we're permutating our data 1000 times to get pvalues lower than 0.05 and when we put <50 FWER cutoff which means
+# 50/1000 <- 0.05.
+# We need to permute samples ids!
+# Check shuffleset() and permuteAll() function for permutation of sample ids.
+                  
