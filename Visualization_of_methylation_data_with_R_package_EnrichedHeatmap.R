@@ -60,6 +60,7 @@ RefSeq_genes_GRanges <- GRanges(seqnames = RefSeq_genes$chromosome, ranges = IRa
 # We first visualize how methylation is enriched at transcription start sites (TSS).
 
 # We extract TSS of genes (note tss has strand information):
+# Note/ Promoter regions were defined as the region consisting of 5 kb upstream from a TSS and 1 kb downstream from a TSS.
 
 tss = promoters(RefSeq_genes_GRanges, upstream = 0, downstream = 1)
 
