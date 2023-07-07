@@ -475,10 +475,17 @@ Refseq_genes_with_gene_symbols <- fread("/home/ko/Downloads/Hans_thought_about_t
 
 Neuron_specific_genes_with_coordinates <- subset(Refseq_genes_with_gene_symbols, Refseq_genes_with_gene_symbols$GeneSymbols %in% Neuron_specific_genes$`Official Symbol`)
 
+# Remove repeated gene IDs to keep unique IDs because without getting rid of repeated gene IDs signal noise
+# appears in heatmap, so repeated gene IDs should be removed!
+
+column_index <- "GeneSymbols" # number of column where repeated gene IDs are existed
+Neuron_specific_genes_with_coordinates_unique <- Neuron_specific_genes_with_coordinates[!duplicated(Neuron_specific_genes_with_coordinates[, get(column_index)]), ]
+# There are 509 neuron-specific genes
+
 # Generate GRanges object for neuron-specific genes
 
-Neuron_specific_genes_GRanges <- GRanges(seqnames = Neuron_specific_genes_with_coordinates$chromosome, ranges = IRanges(start = Neuron_specific_genes_with_coordinates$start,
-                                                                                                                        end = Neuron_specific_genes_with_coordinates$end), Genes = Neuron_specific_genes_with_coordinates$GeneSymbols)
+Neuron_specific_genes_GRanges <- GRanges(seqnames = Neuron_specific_genes_with_coordinates_unique$chromosome, ranges = IRanges(start = Neuron_specific_genes_with_coordinates_unique$start,
+                                                                                                                        end = Neuron_specific_genes_with_coordinates_unique$end), Genes = Neuron_specific_genes_with_coordinates_unique$GeneSymbols)
 # Extract TSS of neuron-specific genes
 
 Neuron_specific_genes_GRanges_tss = promoters(Neuron_specific_genes_GRanges, upstream = 0, downstream = 1)
